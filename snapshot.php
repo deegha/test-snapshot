@@ -51,6 +51,7 @@ class Snapshot
 		     		$response[$incri]['server']	= $line_breakers[$incri][1];
 		     	}else{
 		     		$response[$incri]	= $line_breakers[$incri];
+		     		$response[$incri]['date']	= $line_breakers[$incri][2];
 		     	}
 
 		     
@@ -62,13 +63,6 @@ class Snapshot
 		} else {
 		    return false; 
 		}
-	}
-
-	private function testArrays($array)
-	{
-		echo '<pre>';
-		print_r($array);
-		echo '</pre>';
 	}
 
 	public function numOfSnaps()
@@ -91,7 +85,7 @@ class Snapshot
 
 	public function getOldestSnapshot($server_name)
 	{
-		$curren_date =  date("Y-m-d H:i:s");
+
 		$oldest_snap =  date("Y-m-d H:i:s");
 		$this->snapshot_dates = $this->getAllSnapDetails(TIME_DATE);
 		
@@ -99,7 +93,7 @@ class Snapshot
 			 $record_date 
 			 	= date("Y-m-d H:i:s",strtotime($date['date'].$date['time'].$date['time_difference']));
 
-			if($record_date < $curren_date && $server_name == $date['server'])
+			if($record_date < $oldest_snap && $server_name == $date['server'])
 			{
 				$oldest_snap = $record_date;
 			}
@@ -131,5 +125,20 @@ class Snapshot
 		
 			
 		echo $x;
+	}
+
+	public function snapshotsOlderThanTwoWeeks()
+	{
+		$two_weeks_before =   date('Y-m-d', strtotime("-2 week"));
+		$records = $this->getAllSnapDetails();
+
+		foreach ($records as $key => $record) {
+
+			if(date('Y-m-d', strtotime($records[$key]['date'])) < $two_weeks_before)
+			{
+				echo $records[$key][1].'</br>';
+			}
+		}
+
 	}
 }
