@@ -17,7 +17,7 @@ class Snapshot
 
 	private function getAllSnapDetails($selector = null)
 	{
-		$snaps_file = fopen("data/sample.txt", "r");
+		$snaps_file = fopen(URL_SNAPSHOT_DATA, "r");
 		if ($snaps_file) 
 		{
 			$incri = 0;

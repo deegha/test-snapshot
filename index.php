@@ -10,6 +10,7 @@ const TIME_DATE = 3;
 const SIZE = 4;
 const OLDERS_SNAP = 5;
 const PI = 3.142;
+const URL_SNAPSHOT_DATA = "data/sample.txt";
 
 include ('snapshot.php');
 include ('speedometer.php');
