@@ -42,6 +42,7 @@ class Snapshot
 		     	}else if($selector == SIZE){
 		     		$size =  explode(" ", $line_breakers[$incri][4]);
 		     		$response[$incri]['size']	= $size[6];
+		     		$response[$incri]['server_name'] = $line_breakers[$incri][1];
 		     	}else if($selector == TIME_DATE){
 		     		$time =  explode(" ", $line_breakers[$incri][4]);
 		     		$response[$incri]['date']	= $line_breakers[$incri][2];
@@ -107,12 +108,28 @@ class Snapshot
 	}
 
 	public function sizeOfSnapshot($server = null)
-	{
-		$size_snapshot = $this->getAllSnapDetails(SIZE);
-		$this->testArrays($size_snapshot);
-		if($server != null)
+	{ 
+		$size_snapshots = $this->getAllSnapDetails(SIZE);
+		//$this->testArrays($size_snapshot);
+		$x= 0;
+
+		if($server != null )
 		{
-			
+			foreach ($size_snapshots as $key => $snapshot) 
+			{
+				if($server == $snapshot['server_name'])
+				{	
+					$x =  $x+$snapshot['size'];
+				}
+			}
+		}else{
+			foreach ($size_snapshots as $key => $snapshot) 
+			{
+				$x =  $x+$snapshot['size'];
+			}
 		}
+		
+			
+		echo $x;
 	}
 }
